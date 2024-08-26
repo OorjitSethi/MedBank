@@ -32,12 +32,3 @@ The **Medical Equipment Tracker** is a Streamlit-based web application designed 
 
 ### 7. **Error Handling**
    - The app includes error handling to catch and display errors related to database operations.
-
-## Installation
-
-To run the Medical Equipment Tracker application locally, follow these steps:
-
-1. **Clone the Repository**:
-   ```bash
-   git clone https://github.com/yourusername/medical-equipment-tracker.git
-   cd medical-equipment-tracker
