@@ -240,6 +240,33 @@ def checkout_dialog(serial_number):
                 st.success(f"Equipment {serial_number} checked out successfully.")
                 st.rerun()
 
+# View details dialog
+@st.dialog("View Checkout Details")
+def view_details_dialog(serial_number):
+    try:
+        conn = sqlite3.connect('medical_equipment.db')
+        c = conn.cursor()
+        c.execute("SELECT * FROM checkout_log WHERE serial_number=? AND checkin_time IS NULL", (serial_number,))
+        details = c.fetchone()
+        if details:
+            st.write(f"**Serial Number:** {details[1]}")
+            st.write(f"**Checked Out By:** {details[2]}")
+            st.write(f"**Person Taking Equipment:** {details[3]}")
+            st.write(f"**Contact Number:** {details[4]}")
+            st.write(f"**Address:** {details[5]}")
+            st.write(f"**Advance Money:** {details[6]}")
+            st.write(f"**Duration (days):** {details[7]}")
+            st.write(f"**Checkout Time:** {details[8]}")
+            st.write(f"**Checkout Date:** {details[10]}")
+        else:
+            st.error("No active checkout found for this equipment.")
+    except sqlite3.Error as e:
+        print(f"An error occurred while fetching checkout details: {e}")
+        st.error(f"An error occurred while fetching checkout details: {e}")
+    finally:
+        if conn:
+            conn.close()
+
 # Display the main app interface
 def main():
     st.title("Medical Equipment Tracker")
@@ -297,13 +324,18 @@ def main():
                             checkout_dialog(row['serial_number'])
 
                     elif row['status'] == 'Checked Out':
-                        if st.button(f"Check In {row['serial_number']}", key=f"btn_checkin_{row['serial_number']}"):
-                            print(f"Check-in button clicked for {row['serial_number']}")
-                            checkin_date = datetime.now().date()
-                            if save_checkin(row['serial_number'], checkin_date.strftime("%Y-%m-%d")):
-                                print(f"Check-in successful for {row['serial_number']}")
-                                st.success(f"Equipment {row['serial_number']} checked in successfully.")
-                                st.rerun()
+                        col1, col2, col3 = st.columns(3)
+                        with col1:
+                            if st.button(f"Check In {row['serial_number']}", key=f"btn_checkin_{row['serial_number']}"):
+                                print(f"Check-in button clicked for {row['serial_number']}")
+                                checkin_date = datetime.now().date()
+                                if save_checkin(row['serial_number'], checkin_date.strftime("%Y-%m-%d")):
+                                    print(f"Check-in successful for {row['serial_number']}")
+                                    st.success(f"Equipment {row['serial_number']} checked in successfully.")
+                                    st.rerun()
+                        with col2:
+                            if st.button(f"View Details {row['serial_number']}", key=f"btn_view_details_{row['serial_number']}"):
+                                view_details_dialog(row['serial_number'])
 
     if st.button("Export Logs to Excel", key="export_logs_button"):
         print("Export Logs button clicked")
