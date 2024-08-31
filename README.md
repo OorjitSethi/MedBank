@@ -2,6 +2,8 @@
 
 The **Medical Equipment Tracker** is a web application built using Streamlit that allows users to manage and track medical equipment within an organization. The application provides features for checking equipment in and out, adding new equipment and categories, updating equipment status, and exporting logs to Excel for further analysis.
 
+**The app is accessible through the link: [medbankfoundation.streamlit.app](https://medbankfoundation.streamlit.app)**
+
 ## Features
 
 - **Equipment Management**: Add, edit, and manage equipment and their categories.
@@ -9,32 +11,6 @@ The **Medical Equipment Tracker** is a web application built using Streamlit tha
 - **Search Functionality**: Search for equipment by serial number, category, or other attributes.
 - **Export Logs**: Export equipment check-out and check-in logs to Excel format for external use.
 - **User Interface**: User-friendly web interface powered by Streamlit for ease of use.
-
-## Installation
-
-To run the **Medical Equipment Tracker** locally, follow these steps:
-
-1. **Clone the Repository**:
-   ```bash
-   git clone https://github.com/yourusername/medical-equipment-tracker.git
-   cd medical-equipment-tracker
-   ```
-
-2. **Install Required Dependencies**:
-   Make sure you have Python installed (version 3.7 or higher). Install the required Python packages using pip:
-
-   ```bash
-   pip install streamlit pandas openpyxl
-   ```
-
-3. **Run the Application**:
-   Start the Streamlit application by running:
-
-   ```bash
-   streamlit run app.py
-   ```
-
-   The application will open in your default web browser.
 
 ## Usage
 
@@ -109,6 +85,10 @@ If you would like to contribute to the Medical Equipment Tracker, please follow 
    ```
 
 4. Open a Pull Request.
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
 
 ## Acknowledgments
 
