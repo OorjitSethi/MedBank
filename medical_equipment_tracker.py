@@ -426,7 +426,7 @@ def main():
                 st.markdown(f"**Description:** <span style='font-size: 1.05em;'>{category_description}</span>", unsafe_allow_html=True)
                 st.markdown("<br>", unsafe_allow_html=True)
                 
-                col1, col2, col3, col4 = st.columns([0.25, 0.25, 0.25, 0.25])
+                col1, col2, col3, col4 = st.columns([0.3, 0.28, 0.3, 0.15])
                 with col1:
                     st.write("**Serial No.**")
                 with col2:
@@ -437,7 +437,7 @@ def main():
                     st.write("**View Details**")
                 
                 for _, row in items.iterrows():
-                    col1, col2, col3, col4 = st.columns([0.25, 0.25, 0.25, 0.25])
+                    col1, col2, col3, col4 = st.columns([0.3, 0.28, 0.3, 0.15])
                     with col1:
                         st.write(f"{row['serial_number']}")
                     with col2:
@@ -453,15 +453,15 @@ def main():
                             if new_status != row['status']:
                                 if update_item_status(row['serial_number'], new_status):
                                     row['status'] = new_status  # Update the status in the current row
-                                    st.rerun()  # Reload the website
+                                    st.rerun()  # Reload the website to reflect the change
                         else:
                             st.write(f"{row['status']}")
+
                     with col3:
                         if row['status'] == 'Available':
                             if st.button(f"Check Out", key=f"btn_checkout_{row['serial_number']}"):
                                 checkout_dialog(row['serial_number'])
-                                st.rerun()
-                        elif row['status'] == 'Checked Out':
+                        else:
                             if st.button(f"Check In", key=f"btn_checkin_{row['serial_number']}"):
                                 print(f"Check-in button clicked for {row['serial_number']}")
                                 checkin_date = datetime.now().date()
@@ -469,8 +469,6 @@ def main():
                                     print(f"Check-in successful for {row['serial_number']}")
                                     st.success(f"Equipment {row['serial_number']} checked in successfully.")
                                     st.rerun()
-                        else:
-                            st.write("-")
                     with col4:
                         if row['status'] == 'Checked Out':
                             if st.button(f"View Details", key=f"btn_view_details_{row['serial_number']}"):
@@ -481,7 +479,6 @@ def main():
     if st.button("Export Logs to Excel", key="export_logs_button"):
         print("Export Logs button clicked")
         export_logs()
-        st.rerun()
 
 # Initialize the database and run the app
 if __name__ == "__main__":
